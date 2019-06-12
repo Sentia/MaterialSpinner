@@ -458,6 +458,8 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
             }
             if (isFloatingLabelAnimationEnabled && floatingLabelAnimator.isRunning() || !floatingLabelVisible) {
                 textPaint.setAlpha((int) ((0.8 * floatingLabelPercent + 0.2) * baseAlpha * floatingLabelPercent));
+            } else {
+                textPaint.setAlpha(255);
             }
             String textToDraw = floatingLabelText != null ? floatingLabelText.toString() : hint.toString();
             if (floatingLabelTextAllCaps) {
