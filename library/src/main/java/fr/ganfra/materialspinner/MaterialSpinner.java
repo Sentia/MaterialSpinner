@@ -205,7 +205,7 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
         floatingLabelPercent = 0f;
         errorLabelPosX = 0;
         isSelected = false;
-        floatingLabelVisible = false;
+        floatingLabelVisible = true;
         lastPosition = -1;
         currentNbErrorLines = minNbErrorLines;
 
@@ -451,11 +451,7 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
 
         //Floating Label Drawing
         if ((hint != null || floatingLabelText != null) && enableFloatingLabel) {
-            if (!alwaysShowFloatingLabel && isSelected || hasFocus()) {
-                textPaint.setColor(highlightColor);
-            } else {
-                textPaint.setColor(isEnabled() ? floatingLabelColor : disabledColor);
-            }
+            textPaint.setColor(isEnabled() ? floatingLabelColor : disabledColor);
             if (isFloatingLabelAnimationEnabled && floatingLabelAnimator.isRunning() || !floatingLabelVisible) {
                 textPaint.setAlpha((int) ((0.8 * floatingLabelPercent + 0.2) * baseAlpha * floatingLabelPercent));
             }
