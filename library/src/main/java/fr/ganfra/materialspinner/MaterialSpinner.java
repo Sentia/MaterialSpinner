@@ -187,7 +187,9 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
         floatingLabelTopSpacing = array.getDimensionPixelSize(R.styleable.MaterialSpinner_ms_floatingLabelTopSpacing, getResources().getDimensionPixelSize(R.dimen.floating_label_top_spacing));
         floatingLabelBottomSpacing = array.getDimensionPixelSize(R.styleable.MaterialSpinner_ms_floatingLabelBottomSpacing, getResources().getDimensionPixelSize(R.dimen.floating_label_bottom_spacing));
         floatingLabelInsideSpacing = array.getDimensionPixelSize(R.styleable.MaterialSpinner_ms_floatingLabelInsideSpacing, getResources().getDimensionPixelSize(R.dimen.floating_label_inside_spacing));
-        floatingLabelLeftSpacing = array.getDimensionPixelSize(R.styleable.MaterialSpinner_ms_floatingLabelLeftSpacing, getResources().getDimensionPixelSize(R.dimen.floating_label_left_spacing));
+        rightLeftSpinnerPadding = array.getDimensionPixelSize(R.styleable.MaterialSpinner_ms_horizontalSpacing, getResources().getDimensionPixelSize(R.dimen.right_left_spinner_padding));
+        underlineTopSpacing = array.getDimensionPixelSize(R.styleable.MaterialSpinner_ms_underlineTopSpacing, getResources().getDimensionPixelSize(R.dimen.underline_top_spacing));
+        underlineBottomSpacing = array.getDimensionPixelSize(R.styleable.MaterialSpinner_ms_underlineBottomSpacing, getResources().getDimensionPixelSize(R.dimen.underline_bottom_spacing));
 
         String typefacePath = array.getString(R.styleable.MaterialSpinner_ms_typeface);
         if (typefacePath != null) {
@@ -270,9 +272,6 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
     }
 
     private void initDimensions() {
-        underlineTopSpacing = getResources().getDimensionPixelSize(R.dimen.underline_top_spacing);
-        underlineBottomSpacing = getResources().getDimensionPixelSize(R.dimen.underline_bottom_spacing);
-        rightLeftSpinnerPadding = alignLabels ? getResources().getDimensionPixelSize(R.dimen.right_left_spinner_padding) : 0;
         errorLabelSpacing = (int) getResources().getDimension(R.dimen.error_label_spacing);
         minContentHeight = (int) getResources().getDimension(R.dimen.min_content_height);
     }
@@ -288,7 +287,7 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
     */
 
     private void initFloatingLabelAnimator() {
-        if (floatingLabelAnimator == null) {
+        if (floatingLabelAnimator == null && !alwaysShowFloatingLabel) {
             floatingLabelAnimator = ObjectAnimator.ofFloat(this, "floatingLabelPercent", 0f, 1f);
             floatingLabelAnimator.addUpdateListener(this);
         }

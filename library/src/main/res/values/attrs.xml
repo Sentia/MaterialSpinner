@@ -13,7 +13,9 @@
         <attr name="ms_floatingLabelTopSpacing" format="dimension"/>
         <attr name="ms_floatingLabelBottomSpacing" format="dimension"/>
         <attr name="ms_floatingLabelInsideSpacing" format="dimension"/>
-        <attr name="ms_floatingLabelLeftSpacing" format="dimension"/>
+        <attr name="ms_horizontalSpacing" format="dimension"/>
+        <attr name="ms_underlineTopSpacing" format="dimension"/>
+        <attr name="ms_underlineBottomSpacing" format="dimension"/>
         <attr name="ms_multiline" format="boolean"/>
         <attr name="ms_nbErrorLines" format="integer"/>
         <attr name="ms_typeface" format="string"/>
