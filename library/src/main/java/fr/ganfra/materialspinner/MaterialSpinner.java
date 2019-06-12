@@ -411,8 +411,10 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
         int lineHeight;
 
         int startYLine = getHeight() - getPaddingBottom() + underlineTopSpacing;
-        int startYFloatingLabel = (int) (getPaddingTop() - floatingLabelPercent * floatingLabelBottomSpacing);
-
+        int startYFloatingLabel = getPaddingTop() + extraPaddingTop;
+        if (!alwaysShowFloatingLabel) {
+            startYFloatingLabel -= floatingLabelPercent * floatingLabelBottomSpacing;
+        }
 
         if (error != null && enableErrorLabel) {
             lineHeight = dpToPx(thicknessError);
@@ -457,7 +459,9 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
                 textPaint.setColor(isEnabled() ? floatingLabelColor : disabledColor);
             }
             if (floatingLabelAnimator.isRunning() || !floatingLabelVisible) {
-                textPaint.setAlpha((int) ((0.8 * floatingLabelPercent + 0.2) * baseAlpha * floatingLabelPercent));
+                if (!alwaysShowFloatingLabel) {
+                    textPaint.setAlpha((int) ((0.8 * floatingLabelPercent + 0.2) * baseAlpha * floatingLabelPercent));
+                }
             }
             String textToDraw = floatingLabelText != null ? floatingLabelText.toString() : hint.toString();
             if (floatingLabelTextAllCaps) {
