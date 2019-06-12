@@ -298,8 +298,8 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
     }
 
     public void showFloatingLabel() {
+        floatingLabelVisible = true;
         if (isFloatingLabelAnimationEnabled && floatingLabelAnimator != null) {
-            floatingLabelVisible = true;
             if (floatingLabelAnimator.isRunning()) {
                 floatingLabelAnimator.reverse();
             } else {
@@ -309,8 +309,8 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
     }
 
     public void hideFloatingLabel() {
+        floatingLabelVisible = false;
         if (isFloatingLabelAnimationEnabled && floatingLabelAnimator != null) {
-            floatingLabelVisible = false;
             floatingLabelAnimator.reverse();
         }
     }
