@@ -287,7 +287,7 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
     */
 
     private void initFloatingLabelAnimator() {
-        if (floatingLabelAnimator == null && !alwaysShowFloatingLabel) {
+        if (floatingLabelAnimator == null) {
             floatingLabelAnimator = ObjectAnimator.ofFloat(this, "floatingLabelPercent", 0f, 1f);
             floatingLabelAnimator.addUpdateListener(this);
         }
@@ -296,10 +296,12 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
     public void showFloatingLabel() {
         if (floatingLabelAnimator != null) {
             floatingLabelVisible = true;
-            if (floatingLabelAnimator.isRunning()) {
-                floatingLabelAnimator.reverse();
-            } else {
-                floatingLabelAnimator.start();
+            if (!alwaysShowFloatingLabel) {
+                if (floatingLabelAnimator.isRunning()) {
+                    floatingLabelAnimator.reverse();
+                } else {
+                    floatingLabelAnimator.start();
+                }
             }
         }
     }
@@ -307,7 +309,9 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
     public void hideFloatingLabel() {
         if (floatingLabelAnimator != null) {
             floatingLabelVisible = false;
-            floatingLabelAnimator.reverse();
+            if (!alwaysShowFloatingLabel) {
+                floatingLabelAnimator.reverse();
+            }
         }
     }
 
