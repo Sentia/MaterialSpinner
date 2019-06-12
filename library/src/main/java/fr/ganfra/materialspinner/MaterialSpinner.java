@@ -91,6 +91,7 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
     private float hintTextSize;
     private CharSequence floatingLabelText;
     private boolean floatingLabelTextAllCaps;
+    private boolean isFloatingLabelAnimationEnabled;
     private int floatingLabelColor;
     private boolean multiline;
     private Typeface typeface;
@@ -172,6 +173,7 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
         hintTextSize = array.getDimension(R.styleable.MaterialSpinner_ms_hintTextSize, -1);
         floatingLabelText = array.getString(R.styleable.MaterialSpinner_ms_floatingLabelText);
         floatingLabelTextAllCaps = array.getBoolean(R.styleable.MaterialSpinner_ms_floatingLabelTextAllCaps, false);
+        isFloatingLabelAnimationEnabled = array.getBoolean(R.styleable.MaterialSpinner_ms_floatingLabelAnimationEnabled, false);
         floatingLabelColor = array.getColor(R.styleable.MaterialSpinner_ms_floatingLabelColor, baseColor);
         multiline = array.getBoolean(R.styleable.MaterialSpinner_ms_multiline, true);
         minNbErrorLines = array.getInt(R.styleable.MaterialSpinner_ms_nbErrorLines, 1);
@@ -289,31 +291,27 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
     */
 
     private void initFloatingLabelAnimator() {
-        if (floatingLabelAnimator == null) {
+        if (isFloatingLabelAnimationEnabled && floatingLabelAnimator == null) {
             floatingLabelAnimator = ObjectAnimator.ofFloat(this, "floatingLabelPercent", 0f, 1f);
             floatingLabelAnimator.addUpdateListener(this);
         }
     }
 
     public void showFloatingLabel() {
-        if (floatingLabelAnimator != null) {
+        if (isFloatingLabelAnimationEnabled && floatingLabelAnimator != null) {
             floatingLabelVisible = true;
-            if (!alwaysShowFloatingLabel) {
-                if (floatingLabelAnimator.isRunning()) {
-                    floatingLabelAnimator.reverse();
-                } else {
-                    floatingLabelAnimator.start();
-                }
+            if (floatingLabelAnimator.isRunning()) {
+                floatingLabelAnimator.reverse();
+            } else {
+                floatingLabelAnimator.start();
             }
         }
     }
 
     public void hideFloatingLabel() {
-        if (floatingLabelAnimator != null) {
+        if (isFloatingLabelAnimationEnabled && floatingLabelAnimator != null) {
             floatingLabelVisible = false;
-            if (!alwaysShowFloatingLabel) {
-                floatingLabelAnimator.reverse();
-            }
+            floatingLabelAnimator.reverse();
         }
     }
 
@@ -412,7 +410,7 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
 
         int startYLine = getHeight() - getPaddingBottom() + underlineTopSpacing;
         int startYFloatingLabel = getPaddingTop() + extraPaddingTop;
-        if (!alwaysShowFloatingLabel) {
+        if (isFloatingLabelAnimationEnabled) {
             startYFloatingLabel -= floatingLabelPercent * floatingLabelBottomSpacing;
         }
 
@@ -458,12 +456,8 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
             } else {
                 textPaint.setColor(isEnabled() ? floatingLabelColor : disabledColor);
             }
-            if (floatingLabelAnimator.isRunning() || !floatingLabelVisible) {
-                if (!alwaysShowFloatingLabel) {
-                    textPaint.setAlpha((int) ((0.8 * floatingLabelPercent + 0.2) * baseAlpha * floatingLabelPercent));
-                } else {
-                    textPaint.setAlpha(1);
-                }
+            if (isFloatingLabelAnimationEnabled && floatingLabelAnimator.isRunning() || !floatingLabelVisible) {
+                textPaint.setAlpha((int) ((0.8 * floatingLabelPercent + 0.2) * baseAlpha * floatingLabelPercent));
             }
             String textToDraw = floatingLabelText != null ? floatingLabelText.toString() : hint.toString();
             if (floatingLabelTextAllCaps) {
