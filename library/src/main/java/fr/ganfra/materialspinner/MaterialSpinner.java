@@ -298,8 +298,8 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
     }
 
     public void showFloatingLabel() {
-        floatingLabelVisible = true;
         if (isFloatingLabelAnimationEnabled && floatingLabelAnimator != null) {
+            floatingLabelVisible = true;
             if (floatingLabelAnimator.isRunning()) {
                 floatingLabelAnimator.reverse();
             } else {
@@ -309,8 +309,8 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
     }
 
     public void hideFloatingLabel() {
-        floatingLabelVisible = false;
         if (isFloatingLabelAnimationEnabled && floatingLabelAnimator != null) {
+            floatingLabelVisible = false;
             floatingLabelAnimator.reverse();
         }
     }
@@ -451,15 +451,13 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
 
         //Floating Label Drawing
         if ((hint != null || floatingLabelText != null) && enableFloatingLabel) {
-            if (isSelected || hasFocus()) {
+            if (!alwaysShowFloatingLabel && isSelected || hasFocus()) {
                 textPaint.setColor(highlightColor);
             } else {
                 textPaint.setColor(isEnabled() ? floatingLabelColor : disabledColor);
             }
             if (isFloatingLabelAnimationEnabled && floatingLabelAnimator.isRunning() || !floatingLabelVisible) {
                 textPaint.setAlpha((int) ((0.8 * floatingLabelPercent + 0.2) * baseAlpha * floatingLabelPercent));
-            } else {
-                textPaint.setAlpha(255);
             }
             String textToDraw = floatingLabelText != null ? floatingLabelText.toString() : hint.toString();
             if (floatingLabelTextAllCaps) {
