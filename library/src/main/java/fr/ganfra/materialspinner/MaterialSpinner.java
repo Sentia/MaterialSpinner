@@ -461,6 +461,8 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
             if (floatingLabelAnimator.isRunning() || !floatingLabelVisible) {
                 if (!alwaysShowFloatingLabel) {
                     textPaint.setAlpha((int) ((0.8 * floatingLabelPercent + 0.2) * baseAlpha * floatingLabelPercent));
+                } else {
+                    textPaint.setAlpha(1);
                 }
             }
             String textToDraw = floatingLabelText != null ? floatingLabelText.toString() : hint.toString();
@@ -474,9 +476,7 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
 			}
         }
 
-        drawSelector(canvas, getWidth() - rightLeftSpinnerPadding, getPaddingTop() + dpToPx(8));
-
-
+        drawSelector(canvas, getWidth() - rightLeftSpinnerPadding, getPaddingTop() + extraPaddingTop + dpToPx(8));
     }
 
     private void drawSelector(Canvas canvas, int posX, int posY) {
