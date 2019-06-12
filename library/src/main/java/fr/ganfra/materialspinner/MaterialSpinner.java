@@ -90,6 +90,7 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
     private int hintColor;
     private float hintTextSize;
     private CharSequence floatingLabelText;
+    private boolean floatingLabelTextAllCaps;
     private int floatingLabelColor;
     private boolean multiline;
     private Typeface typeface;
@@ -170,6 +171,7 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
         hintColor = array.getColor(R.styleable.MaterialSpinner_ms_hintColor, baseColor);
         hintTextSize = array.getDimension(R.styleable.MaterialSpinner_ms_hintTextSize, -1);
         floatingLabelText = array.getString(R.styleable.MaterialSpinner_ms_floatingLabelText);
+        floatingLabelTextAllCaps = array.getBoolean(R.styleable.MaterialSpinner_ms_floatingLabelTextAllCaps, false);
         floatingLabelColor = array.getColor(R.styleable.MaterialSpinner_ms_floatingLabelColor, baseColor);
         multiline = array.getBoolean(R.styleable.MaterialSpinner_ms_multiline, true);
         minNbErrorLines = array.getInt(R.styleable.MaterialSpinner_ms_nbErrorLines, 1);
@@ -458,6 +460,9 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
                 textPaint.setAlpha((int) ((0.8 * floatingLabelPercent + 0.2) * baseAlpha * floatingLabelPercent));
             }
             String textToDraw = floatingLabelText != null ? floatingLabelText.toString() : hint.toString();
+            if (floatingLabelTextAllCaps) {
+                textToDraw = textToDraw.toUpperCase();
+            }
             if (isRtl) {
 				canvas.drawText(textToDraw, getWidth() - rightLeftSpinnerPadding - textPaint.measureText(textToDraw), startYFloatingLabel, textPaint);
 			} else {
